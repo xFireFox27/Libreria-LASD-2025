@@ -32,6 +32,7 @@ class PQHeap: virtual public PQ<Data>,
   
   public:
   
+  const Data& operator[](const unsigned long) const override;
   using HeapVec<Data>::Clear;
 
   // Default constructor

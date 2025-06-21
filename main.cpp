@@ -19,8 +19,8 @@ int main() {
   while (continua) {
     std::cout << "\nMenu Test:" << std::endl;
     std::cout << "1. Esegui lasdtest" << std::endl;
-    std::cout << "2. Esegui mytest" << std::endl;
-    std::cout << "3. Esegui mytest2" << std::endl;
+    std::cout << "2. Esegui mytest Libreria 1" << std::endl;
+    std::cout << "3. Esegui mytest Libreria 2" << std::endl;
     std::cout << "4. Esegui tutti i test" << std::endl;
     std::cout << "0. Esci" << std::endl;
     std::cout << "\nScegli un'opzione (0-4): ";
@@ -42,20 +42,20 @@ int main() {
         lasdtest();
         break;
       case 2:
-        std::cout << "\n=== Esecuzione mytest ===\n" << std::endl;
+        std::cout << "\n=== Esecuzione mytest Libreria 1 ===\n" << std::endl;
         mytest::mytest();
         break;
       case 3:
-        std::cout << "\n=== Esecuzione mytest2 ===\n" << std::endl;
+        std::cout << "\n=== Esecuzione mytest Libreria 2 ===\n" << std::endl;
         mytest::mytest2();
         break;
       case 4:
         std::cout << "\n=== Esecuzione tutti i test ===\n" << std::endl;
         std::cout << "\n--- Esecuzione lasdtest---\n" << std::endl;
         lasdtest();
-        std::cout << "\n--- Esecuzione mytest ---\n" << std::endl;
+        std::cout << "\n--- Esecuzione mytest Libreria 1 ---\n" << std::endl;
         mytest::mytest();
-        std::cout << "\n--- Esecuzione mytest2 ---\n" << std::endl;
+        std::cout << "\n--- Esecuzione mytest Libreria 2  ---\n" << std::endl;
         mytest::mytest2();
         break;
       default:

@@ -133,6 +133,8 @@ inline unsigned long HeapVec<Data>::RightChild(unsigned long index) const {
     return (2 * index) + 2;
 }
 
+
+
 /* ************************************************************************** */
 
 }

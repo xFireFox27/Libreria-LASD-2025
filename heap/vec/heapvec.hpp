@@ -30,6 +30,9 @@ private:
   
   public:
   
+  using SortableVector<Data>::Front;
+  using SortableVector<Data>::Back;
+  using SortableVector<Data>::operator[];
   using SortableVector<Data>::Clear;
   
   // Default constructor

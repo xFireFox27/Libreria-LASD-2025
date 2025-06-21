@@ -1152,6 +1152,7 @@ void mytest2() {
     Size(loctestnum, loctesterr, heapString1, true, 10);
     IsHeap(loctestnum, loctesterr, heapString1, true);
     TraversePreOrder(loctestnum, loctesterr, heapString1, true, &TraversePrint<string>);
+    TraversePostOrder(loctestnum, loctesterr, heapString1, true, &TraversePrint<string>);
     heapString1.Sort();
     IsHeap(loctestnum, loctesterr, heapString1, false);
     Traverse(loctestnum, loctesterr, heapString1, true, &TraversePrint<string>);
@@ -1159,6 +1160,7 @@ void mytest2() {
     IsHeap(loctestnum, loctesterr, heapString1, true);
     FoldPreOrder(loctestnum, loctesterr, heapString1, true, FoldAdd<string>, string("!"), string("!ZWPQKLHCJG"));
     FoldPreOrder(loctestnum, loctesterr, heapString1, true, &FoldStringConcatenate, string("!"), string("!ZWPQKLHCJG"));
+    FoldPostOrder(loctestnum, loctesterr, heapString1, true, FoldAdd<string>, string("!"), string("!GJCHLKQPWZ"));
     TraversePreOrder(loctestnum, loctesterr, heapString1, true, &TraversePrint<string>);
     GetAt(loctestnum, loctesterr, heapString1, true, 0, string("Z"));
     GetBack(loctestnum, loctesterr, heapString1, true, string("G"));
@@ -1169,6 +1171,16 @@ void mytest2() {
     Empty(loctestnum, loctesterr, heapString1, true);
     Empty(loctestnum, loctesterr, heapString2, false);
     EqualLinear(loctestnum, loctesterr, heapString1, heapString2, false);
+    lasd::HeapVec<string> heapString3(heapString2);
+    IsHeap(loctestnum, loctesterr, heapString3, true);
+    EqualLinear(loctestnum, loctesterr, heapString2, heapString3, true);
+    heapString2.Sort();
+    IsHeap(loctestnum, loctesterr, heapString2, false);
+    TraversePreOrder(loctestnum, loctesterr, heapString2, true, &TraversePrint<string>);
+    EqualLinear(loctestnum, loctesterr, heapString2, heapString3, false);
+    heapString3.Sort();
+    IsHeap(loctestnum, loctesterr, heapString3, false);
+    EqualLinear(loctestnum, loctesterr, heapString2, heapString3, true);
   }
   catch (...) {
     loctestnum++; 
@@ -1176,6 +1188,99 @@ void mytest2() {
     cout << endl << "Unmanaged error! " << endl;
   }
   cout << "End of My HeapVec<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+
+  cout << endl << "Begin of My HeapVec<double> Test" << endl;
+  try {
+    lasd::Vector<double> vec(10);
+    SetAt(loctestnum, loctesterr, vec, true, 0, 4.4);
+    SetAt(loctestnum, loctesterr, vec, true, 1, 8.8);
+    SetAt(loctestnum, loctesterr, vec, true, 2, 3.3);
+    SetAt(loctestnum, loctesterr, vec, true, 3, 3.1);
+    SetAt(loctestnum, loctesterr, vec, true, 4, 0.5);
+    SetAt(loctestnum, loctesterr, vec, true, 5, 13.2);
+    SetAt(loctestnum, loctesterr, vec, true, 6, 6.6);
+    SetAt(loctestnum, loctesterr, vec, true, 7, 1.1);
+    SetAt(loctestnum, loctesterr, vec, true, 8, 9.9);
+    SetAt(loctestnum, loctesterr, vec, true, 9, 12.0);
+    TraversePreOrder(loctestnum, loctesterr, vec, true, &TraversePrint<double>);
+
+    lasd::HeapVec<double> heap1;
+    Empty(loctestnum, loctesterr, heap1, true);
+    IsHeap(loctestnum, loctesterr, heap1, true);
+    heap1.Clear();
+    heap1.Sort();
+    heap1.Heapify();
+    heap1 = vec;
+    Empty(loctestnum, loctesterr, heap1, false);
+    Size(loctestnum, loctesterr, heap1, true, 10);
+    IsHeap(loctestnum, loctesterr, heap1, true);
+    TraversePreOrder(loctestnum, loctesterr, heap1, true, &TraversePrint<double>);
+    heap1.Sort();
+    IsHeap(loctestnum, loctesterr, heap1, false);
+    Traverse(loctestnum, loctesterr, heap1, true, &TraversePrint<double>);
+    heap1.Heapify();
+    IsHeap(loctestnum, loctesterr, heap1, true);
+    FoldPreOrder(loctestnum, loctesterr, heap1, true, FoldAdd<double>, 0.5, 63.4);
+    GetAt(loctestnum, loctesterr, heap1, true, 0, 13.2);
+    TraversePreOrder(loctestnum, loctesterr, heap1, true, &TraversePrint<double>);
+
+    lasd::HeapVec<double> heap2(std::move(heap1));
+    IsHeap(loctestnum, loctesterr, heap2, true);
+    heap2.Sort();
+    IsHeap(loctestnum, loctesterr, heap2, false);
+    TraversePreOrder(loctestnum, loctesterr, heap1, true, &TraversePrint<double>);
+    TraversePreOrder(loctestnum, loctesterr, heap2, true, &TraversePrint<double>);
+    EqualLinear(loctestnum, loctesterr, heap1, heap2, false);
+    heap2.Heapify();
+    heap1 = heap2;
+    EqualLinear(loctestnum, loctesterr, heap1, heap2, true);
+
+    lasd::HeapVec<double> movheap1(std::move(vec));
+    IsHeap(loctestnum, loctesterr, movheap1, true);
+    Empty(loctestnum, loctesterr, movheap1, false);
+    Size(loctestnum, loctesterr, movheap1, true, 10);
+    TraversePreOrder(loctestnum, loctesterr, movheap1, true, &TraversePrint<double>);
+    TraversePostOrder(loctestnum, loctesterr, movheap1, true, &TraversePrint<double>);
+    Fold(loctestnum, loctesterr, movheap1, true, FoldAdd<double>, 0.5, 63.4);
+    GetFront(loctestnum, loctesterr, movheap1, true, 13.2);
+    GetBack(loctestnum, loctesterr, movheap1, true, 0.5);
+    movheap1.Clear();
+    Empty(loctestnum, loctesterr, movheap1, true);
+    GetFront(loctestnum, loctesterr, movheap1, false, 13.2);
+    GetBack(loctestnum, loctesterr, movheap1, false, 0.5);
+    movheap1.Sort();
+    movheap1.Heapify();
+    IsHeap(loctestnum, loctesterr, movheap1, true);
+    Traverse(loctestnum, loctesterr, vec, true, &TraversePrint<double>);
+    movheap1 = vec;
+    IsHeap(loctestnum, loctesterr, movheap1, true);
+    TraversePreOrder(loctestnum, loctesterr, movheap1, true, &TraversePrint<double>);
+    movheap1.Sort();
+    Traverse(loctestnum, loctesterr, movheap1, true, &TraversePrint<double>);
+    lasd::HeapVec<double> heap3;
+    heap3 = movheap1;
+    IsHeap(loctestnum, loctesterr, heap3, false);
+    heap3.Sort();
+
+    lasd::Vector<double> vec2(7);
+    SetAt(loctestnum, loctesterr, vec2, true, 0, 4.1);
+    SetAt(loctestnum, loctesterr, vec2, true, 1, 1.2);
+    SetAt(loctestnum, loctesterr, vec2, true, 2, 3.3);
+    SetAt(loctestnum, loctesterr, vec2, true, 3, 14.4);
+    SetAt(loctestnum, loctesterr, vec2, true, 4, 16.5);
+    SetAt(loctestnum, loctesterr, vec2, true, 5, 9.6);
+    SetAt(loctestnum, loctesterr, vec2, true, 6, 10.7);
+
+    lasd::HeapVec<double> heap4(vec2);
+    heap4.Heapify();
+    IsHeap(loctestnum, loctesterr, heap4, true);
+  }
+  catch (...) {
+    loctestnum++;
+    loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of My HeapVec<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
 
   cout << endl << "Begin of My PQHeap<int> Test" << endl;
   try
@@ -1253,12 +1358,35 @@ void mytest2() {
     TipNRemove(loctestnum, loctesterr, movpqheap, true, 100);
     TraversePreOrder(loctestnum, loctesterr, movpqheap, true, &TraversePrint<int>);
     Fold(loctestnum, loctesterr, movpqheap, true, FoldAdd<int>, 1, 290);
+    Exists(loctestnum, loctesterr, movpqheap, true, 67);
+    Exists(loctestnum, loctesterr, movpqheap, true, 89);
+    Exists(loctestnum, loctesterr, movpqheap, false, 100);
     movpqheap.Clear();
     mytest::ChangeMove(loctestnum, loctesterr, movpqheap, false, 0, 0);
-    for (int i = 100; i > 0; i--) {
+    for (int i = 15; i > 0; i--) {
       Insert(loctestnum, loctesterr, movpqheap, i);
     }
     TraversePreOrder(loctestnum, loctesterr, movpqheap, true, &TraversePrint<int>);  
+    lasd::PQHeap<int> pqheap33;
+    Insert(loctestnum, loctesterr, pqheap33, 100);
+    lasd::PQHeap<int> pqheap44;
+    pqheap44 = movpqheap;
+    EqualLinear(loctestnum, loctesterr, pqheap33, pqheap44, false);
+    EqualLinear(loctestnum, loctesterr, pqheap44, movpqheap, true);
+    pqheap44.Clear();
+    Empty(loctestnum, loctesterr, pqheap44, true);
+    Exists(loctestnum, loctesterr, pqheap44, false, 100);
+    movpqheap.Clear();
+    EqualLinear(loctestnum, loctesterr, pqheap44, movpqheap, true);
+    Insert(loctestnum, loctesterr, pqheap44, 100);
+    EqualLinear(loctestnum, loctesterr, pqheap44, pqheap33, true);
+    pqheap44.Clear();
+    Insert(loctestnum, loctesterr, pqheap44, 100);
+    Insert(loctestnum, loctesterr, pqheap44, 200);
+    Insert(loctestnum, loctesterr, pqheap44, 300);
+    Tip(loctestnum, loctesterr, pqheap44, true, 300);
+    GetAt(loctestnum, loctesterr, pqheap44, false, 3, 300);
+    GetAt(loctestnum, loctesterr, pqheap44, true, 0, 300);
   }
   catch(...)
   {
@@ -1311,6 +1439,10 @@ void mytest2() {
     mytest::InsertMove(loctestnum, loctesterr, pqheap1, string("Q"));
     mytest::InsertMove(loctestnum, loctesterr, pqheap1, string("R"));
     TraversePreOrder(loctestnum, loctesterr, pqheap1, true, &TraversePrint<string>);
+    GetBack(loctestnum, loctesterr, pqheap1, true, string("G"));
+    GetFront(loctestnum, loctesterr, pqheap1, true, string("Z"));
+    pqheap1.Clear();
+    pqheap1.Clear();
     
   }
   catch(...)
@@ -1320,9 +1452,98 @@ void mytest2() {
     cout << endl << "Unmanaged error! " << endl;
   }
   cout << "End of My PQHeap<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+
+  cout << endl << "Begin of My PQHeap<double> Test" << endl;
+  try
+  {
+    lasd::Vector<double> vecDouble(10);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 0, 4.4);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 1, 8.8);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 2, 3.3);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 3, 3.1);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 4, 0.5);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 5, 13.2);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 6, 6.6);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 7, 1.1);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 8, 9.9);
+    SetAt(loctestnum, loctesterr, vecDouble, true, 9, 12.0);
+
+    lasd::PQHeap<double> pqheap1;
+    Empty(loctestnum, loctesterr, pqheap1, true);
+    Size(loctestnum, loctesterr, pqheap1, true, 0);
+    pqheap1.Clear();
+    Tip(loctestnum, loctesterr, pqheap1, false, 0.0);
+    TipNRemove(loctestnum, loctesterr, pqheap1, false, 0.0);
+    RemoveTip(loctestnum, loctesterr, pqheap1, false);
+    mytest::ChangeCopy(loctestnum, loctesterr, pqheap1, false, 0, 0.0);
+    mytest::ChangeMove(loctestnum, loctesterr, pqheap1, false, 0, 0.0);
+    Fold(loctestnum, loctesterr, pqheap1, true, FoldAdd<double>, 0.0, 0.0);
+    pqheap1 = vecDouble;
+    Empty(loctestnum, loctesterr, pqheap1, false);
+    Size(loctestnum, loctesterr, pqheap1, true, 10);
+    RemoveTip(loctestnum, loctesterr, pqheap1, true);
+    Insert(loctestnum, loctesterr, pqheap1, 13.2);
+    mytest::InsertMove(loctestnum, loctesterr, pqheap1, 0.1);
+    TraversePreOrder(loctestnum, loctesterr, pqheap1, true, &TraversePrint<double>);
+    mytest::ChangeMove(loctestnum, loctesterr, pqheap1, true, 7, 0.05);
+    mytest::ChangeMove(loctestnum, loctesterr, pqheap1, true, 3, 1.05);
+    mytest::ChangeCopy(loctestnum, loctesterr, pqheap1, true, 2, 2.05);
+    Insert(loctestnum, loctesterr, pqheap1, 3.05);
+    Insert(loctestnum, loctesterr, pqheap1, 4.05);
+    Insert(loctestnum, loctesterr, pqheap1, 5.05);
+    Insert(loctestnum, loctesterr, pqheap1, 6.05);
+    mytest::InsertMove(loctestnum, loctesterr, pqheap1, 12.05);
+    mytest::InsertMove(loctestnum, loctesterr, pqheap1, 11.05);
+    TraversePreOrder(loctestnum, loctesterr, pqheap1, true, &TraversePrint<double>);
+    pqheap1.Clear();
+    pqheap1.Clear();
+    mytest::InsertMove(loctestnum, loctesterr, pqheap1, 12.05);
+    mytest::InsertMove(loctestnum, loctesterr, pqheap1, 11.05);
+    TraversePreOrder(loctestnum, loctesterr, pqheap1, true, &TraversePrint<double>);
+    Exists(loctestnum, loctesterr, pqheap1, false, 6.05);
+    Exists(loctestnum, loctesterr, pqheap1, false, 100.0);
+    lasd::PQHeap<double> pqheap2(vecDouble);
+    lasd::PQHeap<double> pqheap3;
+    pqheap3 = pqheap1;
+    EqualLinear(loctestnum, loctesterr, pqheap1, pqheap3, true);
+    TraversePreOrder(loctestnum, loctesterr, pqheap1, true, &TraversePrint<double>);
+    Tip(loctestnum, loctesterr, pqheap1, true, 12.05);
+    TipNRemove(loctestnum, loctesterr, pqheap1, true, 12.05);
+    Size(loctestnum, loctesterr, pqheap1, true, 1); 
+    Tip(loctestnum, loctesterr, pqheap1, true, 11.05); 
+    RemoveTip(loctestnum, loctesterr, pqheap1, true);
+    Size(loctestnum, loctesterr, pqheap1, true, 0);
+    lasd::PQHeap<double> movpqheap(std::move(pqheap1));
+    Size(loctestnum, loctesterr, pqheap1, true, 0);
+    Empty(loctestnum, loctesterr, pqheap1, true);
+    Size(loctestnum, loctesterr, movpqheap, true, 0);
+    Tip(loctestnum, loctesterr, movpqheap, false, 12.05);
+    mytest::InsertMove(loctestnum, loctesterr, movpqheap, 1.04);
+    mytest::InsertMove(loctestnum, loctesterr, movpqheap, 2.04);
+    mytest::InsertMove(loctestnum, loctesterr, movpqheap, 44.23);
+    mytest::InsertMove(loctestnum, loctesterr, movpqheap, 0.01);
+    TraversePreOrder(loctestnum, loctesterr, movpqheap, true, &TraversePrint<double>);
+    TraversePostOrder(loctestnum, loctesterr, movpqheap, true, &TraversePrint<double>);
+    Exists(loctestnum, loctesterr, movpqheap, true, 0.01);
+    Exists(loctestnum, loctesterr, movpqheap, false, 21.2);
+    movpqheap.Clear();
+    Empty(loctestnum, loctesterr, movpqheap, true);
+    Tip(loctestnum, loctesterr, movpqheap, false, 0.0);
+    pqheap1.Clear();
+    EqualLinear(loctestnum, loctesterr, pqheap1, movpqheap, true);
+    
+  }
+  catch(...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of My PQHeap<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   
 } 
 
+  
 /* ************************************************************************** */
 
 }

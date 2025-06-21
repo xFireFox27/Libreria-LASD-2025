@@ -142,16 +142,20 @@ void PQHeap<Data>::Resize(const unsigned long newSize) {
 template <typename Data>
 void PQHeap<Data>::Expand() {
     if (size >= capacity) {
-        unsigned long newSize = (capacity == 0) ? 8 : capacity * 2;
-        Resize(newSize);
+        unsigned long new_capacity = (capacity == 0) ? 8 : capacity * 2;
+        Resize(new_capacity);
     }
 }
 
 template <typename Data>
 void PQHeap<Data>::Reduce() {
-    if (size * 5 <= capacity && capacity > 8) {
-        unsigned long newSize = capacity / 2;
-        Resize(newSize);
+    if (size * 5 <= capacity) {
+        unsigned long new_capacity = capacity / 2;
+        const unsigned long MIN_CAPACITY = 8;
+        if (new_capacity < MIN_CAPACITY) {
+            new_capacity = MIN_CAPACITY;
+        }
+        Resize(new_capacity);
     }
 }
 
@@ -170,6 +174,11 @@ void PQHeap<Data>::HeapifyUp(unsigned long index) {
         std::swap(Elements[index], Elements[parentIndex]);
         HeapifyUp(parentIndex); 
     }
+}
+
+template <typename Data>
+inline const Data& PQHeap<Data>::operator[](const unsigned long index) const {
+    return HeapVec<Data>::operator[](index);
 }
 
 
